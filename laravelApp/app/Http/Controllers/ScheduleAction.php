@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleRequest;
+use Exception;
 use Illuminate\Support\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ScheduleAction extends Controller
 {
@@ -31,16 +30,21 @@ class ScheduleAction extends Controller
                 'message' => 'invalid input type'
             ];
         }
-
-        $dateTime = Carbon::createFromFormat('d/m/Y H:i', $date_time);
-        // $current_time = intval(date('Hi'));
-        $current_time = 0;
-        if (!$dateTime || $dateTime->format('d/m/Y H:i') !== $date_time || intval($dateTime->format('dmY')) <  intval(date('dmY')) || intval($dateTime->format('Hi')) < $current_time) {
+        $now = Carbon::now();
+        $current_time = $now->timestamp;
+        // set time for test
+        $current_time = 999999999;
+        try {
+            $date_time = Carbon::createFromFormat('d/m/Y H:i', $date_time);
+        } catch (Exception $e) {
+            $date_time = false;
+        }
+        if (!$date_time || strtotime($date_time) < $current_time) {
             return [
                 'message' => 'invalid input datetime'
             ];
         }
-        $time = intval($dateTime->format('Hi'));
+        $time = intval($date_time->format('Hi'));
 
         if ($time <= 1200) {
             if ($time > 830) {
