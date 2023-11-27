@@ -10,10 +10,10 @@ sh init.sh
 ```
 ### Run test case
 ```shell
-docker exec example_php-fpm php artisan test --filter=test_getSchedules
+docker exec coverage_php-fpm php artisan test --filter=test_getSchedules
 ```
 ### Create Reporting test Coverage
 
 ```shell
-docker exec example_php-fpm php artisan test --coverage-html=coverage
+docker exec coverage_php-fpm php artisan test --coverage-html=coverage
 ```

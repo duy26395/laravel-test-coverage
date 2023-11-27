@@ -7,11 +7,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libonig-dev \
     libxml2-dev \
-    git \
-    cron \
-    && git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis \
-    && docker-php-ext-install -j$(nproc) zip gd pdo_pgsql redis \
-    && docker-php-ext-enable zip gd pdo_pgsql redis
+    git
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
